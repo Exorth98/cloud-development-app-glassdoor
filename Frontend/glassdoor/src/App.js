@@ -1,6 +1,4 @@
-import logo from './logo.svg';
 import './App.css';
-import Appbar from '@material-ui/core/AppBar';
 import MenuComponent from './components/MenuComponent'
 
 function App() {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs, Tab, AppBar} from "@material-ui/core";
 import ComponentPrinted from './ComponentPrinted'
 
+
 const MenuComponent = () => {
     const [selectedTab, setSelectedTab] = React.useState(0);
 
@@ -23,14 +24,14 @@ const MenuComponent = () => {
         <Tab label="RDA4" />
       </Tabs>
       </AppBar>
-      {selectedTab == 0 && <ComponentPrinted id='0'/>}
-      {selectedTab == 1 && <ComponentPrinted id='1'/>}
-      {selectedTab == 2 && <ComponentPrinted id='2'/>}
-      {selectedTab == 3 && <ComponentPrinted id='3'/>}
-      {selectedTab == 4 && <ComponentPrinted id='4'/>}
-      {selectedTab == 5 && <ComponentPrinted id='5'/>}
-      {selectedTab == 6 && <ComponentPrinted id='6'/>}
-      {selectedTab == 7 && <ComponentPrinted id='7'/>}
+      {selectedTab === 0 && <ComponentPrinted id='0'/>}
+      {selectedTab === 1 && <ComponentPrinted id='1'/>}
+      {selectedTab === 2 && <ComponentPrinted id='2'/>}
+      {selectedTab === 3 && <ComponentPrinted id='3'/>}
+      {selectedTab === 4 && <ComponentPrinted id='4'/>}
+      {selectedTab === 5 && <ComponentPrinted id='5'/>}
+      {selectedTab === 6 && <ComponentPrinted id='6'/>}
+      {selectedTab === 7 && <ComponentPrinted id='7'/>}
       </>
     );
 };

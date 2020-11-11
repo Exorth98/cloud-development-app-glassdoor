@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.MuiTableHead-root {
+  background-color: rgb(201, 193, 193);
+}
+
+.MuiTable-root {
+  background-color: rgb(170, 170, 248);
+}
