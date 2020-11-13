@@ -38,7 +38,7 @@ const TabsValue = ({data}) => {
             {data.map((row) => (
             <TableRow>
                 {Object.keys(keys).map((attribut) => (
-              <TableCell align="left" colSpan={3}>{row[attribut]}</TableCell>
+              <TableCell align="left" colSpan={3} keys={row[attribut[0]]}>{row[attribut]}</TableCell>
                 ))}
               
             </TableRow>

@@ -44,3 +44,20 @@
 .MuiTable-root {
   background-color: rgb(170, 170, 248);
 }
+
+.line {
+  width: 80vw;
+  height: 60vh;
+  margin:auto;
+}
+
+.MuiCard-root{
+  background-color: rgb(189, 184, 184);
+}
+
+.important{
+  font-weight: bold;
+}
+.accordionDetails {
+  background-color: rgb(170, 170, 248);
+}
