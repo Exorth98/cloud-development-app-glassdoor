@@ -60,4 +60,11 @@
 }
 .accordionDetails {
   background-color: rgb(170, 170, 248);
+  overflow-x: auto;
+}
+
+.linkA{
+  text-decoration: none; 
+   background-color: none;
+   color: white; 
 }

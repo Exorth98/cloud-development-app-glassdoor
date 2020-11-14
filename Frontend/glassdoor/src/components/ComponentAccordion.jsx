@@ -64,21 +64,21 @@ const ComponentAccordion = ({data}) => {
                 </AccordionSummary>
                 <AccordionDetails className="accordionDetails">
                     <Typography className={classes.Summary}>
-                        <div>Company informations: 
+                        <div><a className="important">Company informations: </a>
                             <br />{row.map_country}
                             <br />{row.overview_sector}
                             <br />{row.overview_size}
                             <br />{row.overview_type}
                         </div>
                     </Typography>
+                    {row.benefits_comments.map((row2) => (
                     <Typography className={classes.summarySecond}>
-                        <div>Company informations: 
-                            <br />{row.map_country}
-                            <br />{row.overview_sector}
-                            <br />{row.overview_size}
-                            <br />{row.overview_type}
+                        <div><a className="important">Benefits comments: </a>
+                            <br />{row2.benefits_comments_val_comment}
+                            <br /><a className="important">{row2.benefits_comments_val_createDate}</a>
                         </div>
                     </Typography>
+                    ))}
                 </AccordionDetails>
        
            </Accordion>    
