@@ -23,10 +23,23 @@ const useStyles = makeStyles({
     },
   });
 
+  const convertType = (attribut) => {
+    if(typeof attribut === 'number'){
+        if(attribut % 1 === 0){
+            return attribut;
+        }else{
+            return attribut.toFixed(2);
+        }
+        
+    }
+    return attribut;
+} 
+
 const DispValue = ({data}) => {
     const classes = useStyles();
 
     const attributs = {data}.data[0];
+
     console.log(Object.keys(attributs));
     return(
         <div>
@@ -34,7 +47,7 @@ const DispValue = ({data}) => {
                 <Card className={classes.root} variant="outlined">
                     <CardContent>
                {Object.keys(attributs).map((row2) =>(
-                 <Typography variant="h5" component="h2">{row[row2]} </Typography>
+                 <Typography variant="h5" component="h2">{convertType(row[row2])}</Typography>
                ))}
                 </CardContent>
                </Card>

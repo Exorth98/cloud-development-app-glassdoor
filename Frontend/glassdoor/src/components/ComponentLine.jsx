@@ -10,7 +10,8 @@ const MyResponsiveLine = ({data}) => {
         data.map((row)=>{
             myData = {};
             myData['x'] = row._id;
-            myData['y'] = (Math.round(row['average:']*100)/100);
+            //myData['y'] = (Math.round(row['average:']*100)/100);
+            myData['y'] = (row['average:']).toFixed(2);
             viewData.averageByRating[0].data.push(myData);
         })
         
