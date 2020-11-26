@@ -7,6 +7,7 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
 
 const useStyles = makeStyles({
     table: {
@@ -28,13 +29,16 @@ const convertType = (attribut) => {
     return attribut;
 } 
 
-
-
 const TabsValue = ({data}) => {
+    const [dataToPrint, setData] = useState(data);
     const [page, setPage] = useState(0);
     const [rowsPerpage, setRowPerPage] = useState(10);
-    console.log(data);
+    const [directionSort, setDirectionSort] = useState("desc");
+    const [sortedField, setSortedField] = React.useState(null);
+    //console.log(data);
    const keys = {data}.data[0];
+
+
 
    const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -45,23 +49,51 @@ const TabsValue = ({data}) => {
         setPage(0);
     }
 
+    const handleSort = (valueToSort) => {
+
+        valueToSort = valueToSort.row;
+        setSortedField(valueToSort);
+
+        if(!directionSort){
+            setDirectionSort("asc");
+        }else{
+            if(directionSort === "asc"){
+                setDirectionSort("desc");
+            }
+            else{
+                setDirectionSort("asc");
+            }
+        }
+        if(directionSort === "desc"){
+            setData( dataToPrint.sort((a, b) => a[valueToSort] > b[valueToSort] ));
+        }
+        else{
+            setData( dataToPrint.sort((a, b) => a[valueToSort] < b[valueToSort] ));
+        }
+    }
+
    //console.log(Object.keys(keys)[0]);
     const classes = useStyles();
+
     return(
         <div>
-    
             <Table className= {classes.table} >
                 <TableHead> 
                     <TableRow>
-                    {Object.keys(keys).map((row) => (
-                         <TableCell align="left" colSpan={3}>
+                    {Object.keys(keys).map((row) => ( 
+                         <TableCell align="left" colSpan={3} key={row}>
+                             <TableSortLabel 
+                             active={sortedField === row}
+                             direction={sortedField === row ? directionSort : 'asc'}
+                             onClick={() => handleSort({row})}>
                             {row}
+                            </TableSortLabel>
                         </TableCell>
                         ))}
                     </TableRow>
                 </TableHead>
                 <TableBody>
-            {data.slice(page * rowsPerpage, page * rowsPerpage + rowsPerpage).map((row) => (
+            {dataToPrint.slice(page * rowsPerpage, page * rowsPerpage + rowsPerpage).map((row) => (
             <TableRow>
                 {Object.keys(keys).map((attribut) => (
               <TableCell align="left" colSpan={3} keys={row[attribut[0]]}>{convertType(row[attribut])}</TableCell>
@@ -74,7 +106,7 @@ const TabsValue = ({data}) => {
                     <TableRow>
                     <TablePagination rowsPerPageOptions={[10, 20, 50]} 
                     rowsPerPage={rowsPerpage}
-                    count={data.length}
+                    count={dataToPrint.length}
                     page={page}
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
