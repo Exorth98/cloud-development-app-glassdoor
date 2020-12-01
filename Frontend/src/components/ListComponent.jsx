@@ -30,7 +30,7 @@ const ListToPrint = ({dataToProcess, id}) => {
             action = <TabsValues data={dataToProcess}/>
         }
         if(id === '6'){ //RDA3
-            action = <DispValue data={dataToProcess} id={id}/>
+            action = <DispValue  id={id}/>
         }
         if(id === '7'){ //RDA4
             action = <TabsValues data={dataToProcess}/>

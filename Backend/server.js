@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 require('dotenv').config({path: '.env'})
+const cors = require('cors')
+app.use(cors())
 
 const {
     RDA3_TIMERANGE_MAPPING,
@@ -18,6 +20,7 @@ app.get('/', (req, res) => {
 app.get('/stats', async (req, res) => {
     try{
         result = await queryDB(null,"stats")
+        console.log(result);
         res.send(result)
     }
     catch(e){

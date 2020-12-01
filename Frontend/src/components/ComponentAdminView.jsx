@@ -42,7 +42,6 @@ const useStyles = makeStyles({
 
 const AdminView = () => {
     const [myData, setMyData] = useState(null);
-    const [shards, setMyShards] = useState(null);
     const classes = useStyles();
     //const shards = dataTest.shards; //change for myData §/////////////////////////////////////////////
 
@@ -102,27 +101,19 @@ const AdminView = () => {
         </Card>
         </>
     )
-          
           useEffect(()=>{
             ( async ()=>{
-                const myData = await makeGetRequest("stats");
-                setMyData(myData);
-                setMyShards(myData.shards);
+                const data = await makeGetRequest({name:'stats'});
+                 setMyData(data);     
             })();
           }, [])
 
-     var action;
-     if(myData && myData.length>0 && shards && shards.length>0){
-            action = renderValues(myData,shards);
-        }
-        else{
-         action = <CircularProgress />
-        }
-
+    
     return(
         <div>
             <h1>Admin view</h1>
-        {action}
+            {myData && renderValues(myData, myData.shards)}
+            {!myData && <CircularProgress />}
 
         </div>     
     );

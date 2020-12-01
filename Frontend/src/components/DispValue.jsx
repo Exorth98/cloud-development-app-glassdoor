@@ -66,8 +66,8 @@ const DispValue = ({data, id}) => {
     const classes = useStyles();
 
     const [msg, setMessage] = useState ("Load data");
-    const [dateToGet, setDateToGet] = useState(null);
-    const [nbEmployees, setNbEmployees] = useState(null);
+    const [dateToGet, setDateToGet] = useState("last week");
+    const [nbEmployees, setNbEmployees] = useState("10000+ employees");
     const [apiData, setApiData] = useState(null);
 
     var attributs = null
@@ -88,10 +88,9 @@ const DispValue = ({data, id}) => {
     const handleRequest = () => {
       ( async ()=>{
         if(dateToGet!=null && nbEmployees!=null){
-          var name="RDA3?timeRange="+dateToGet+"&empNumber="+nbEmployees
-          //const myData = await makeGetRequest({name});
-          //setApiData(myData);
-          console.log(name);
+          var name="RDA3?timeRange="+encodeURIComponent(dateToGet)+"&empNumber="+encodeURIComponent(nbEmployees);
+          const myData = await makeGetRequest({name});
+          setApiData(myData);
         }else{
           alert("Please fill the fields");
         }
@@ -112,15 +111,15 @@ const DispValue = ({data, id}) => {
             onChange={handleChangeDate}
             label="Date"
             >
-            <MenuItem value={"20M"}>20 minutes ago</MenuItem>
-            <MenuItem value={'1H'}>1 hour ago</MenuItem>
-            <MenuItem value={'10H'}>10 hours ago</MenuItem>
-            <MenuItem value={'1D'}>yesterday</MenuItem>
-            <MenuItem value={'3D'}>3 days ago</MenuItem>
-            <MenuItem value={'1W'}>last week</MenuItem>
-            <MenuItem value={'2W'}>2 weeks ago</MenuItem>
-            <MenuItem value={'4W'}>4 weeks ago</MenuItem>
-            <MenuItem value={'7W'}>7 weeks ago</MenuItem>
+            <MenuItem value={"20 minutes ago"}>20 minutes ago</MenuItem>
+            <MenuItem value={'1 hour ago'}>1 hour ago</MenuItem>
+            <MenuItem value={'10 hours ago'}>10 hours ago</MenuItem>
+            <MenuItem value={'yesterday'}>yesterday</MenuItem>
+            <MenuItem value={'3 days ago'}>3 days ago</MenuItem>
+            <MenuItem value={'last week'}>last week</MenuItem>
+            <MenuItem value={'2 weeks ago'}>2 weeks ago</MenuItem>
+            <MenuItem value={'4 weeks ago'}>4 weeks ago</MenuItem>
+            <MenuItem value={'7 weeks ago'}>7 weeks ago</MenuItem>
             </Select>
           </FormControl>
           <FormControl variant="outlined" className={classes.formControl}>
@@ -130,14 +129,14 @@ const DispValue = ({data, id}) => {
             onChange={handleChangeEmployees}
             label="Number of employees"
             >
-            <MenuItem value={'L50'}>1 to 50 employees</MenuItem>
-            <MenuItem value={'L200'}>51 to 200 employees</MenuItem>
-            <MenuItem value={'L500'}>201 to 500 employees</MenuItem>
-            <MenuItem value={'L1000'}>501 to 1000 employees</MenuItem>
-            <MenuItem value={'L5000'}>1001 to 5000 employees</MenuItem>
-            <MenuItem value={'L10000'}>5001 to 10000 employees</MenuItem>
-            <MenuItem value={'M10000'}>10000+ employees</MenuItem>
-            <MenuItem value={'U'}>Unknown</MenuItem>
+            <MenuItem value={'1 to 50 employees'}>1 to 50 employees</MenuItem>
+            <MenuItem value={'51 to 200 employees'}>51 to 200 employees</MenuItem>
+            <MenuItem value={'201 to 500 employees'}>201 to 500 employees</MenuItem>
+            <MenuItem value={'501 to 1000 employees'}>501 to 1000 employees</MenuItem>
+            <MenuItem value={'1001 to 5000 employees'}>1001 to 5000 employees</MenuItem>
+            <MenuItem value={'5001 to 10000 employees'}>5001 to 10000 employees</MenuItem>
+            <MenuItem value={'10000+ employees'}>10000+ employees</MenuItem>
+            <MenuItem value={'Unknown'}>Unknown</MenuItem>
             </Select>
           </FormControl>
           <Button variant="contained" color="primary" onClick={handleRequest}>

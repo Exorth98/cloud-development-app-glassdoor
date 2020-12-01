@@ -28,8 +28,10 @@ const queryDB = (query, operation) => new Promise ( (resolve, reject) => {
                 console.log("Running query...")
                 let response = null
                 if(operation == "stats"){
+                    
                     response = await stats(collection)
                     response = filterStats(response)
+                    //console.log("stats found");
                 }
                 else{
                     response = await operator(collection, query)
@@ -37,10 +39,13 @@ const queryDB = (query, operation) => new Promise ( (resolve, reject) => {
                 }
 
                 mongoClient.close();
-                console.log(response)
+                //console.log(response)
                 resolve(response)
             }
-            catch(e){reject(e)}
+            catch(e){
+                mongoClient.close(); 
+                reject(e) 
+            }
         });
     });
 })
