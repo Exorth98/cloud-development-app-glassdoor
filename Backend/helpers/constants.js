@@ -18,6 +18,7 @@ const QUERY_NAMES = [
     "RDA1", "RDA2", "RDA3", "RDA4"
 ]
 
+
 const QUERIES = {
 
     // User view
@@ -96,13 +97,15 @@ const QUERIES = {
         ]
     },
 
-    RDA3: {
-        operation: "aggregate",
-        query: [
-            {"$unwind": {'path': "$reviews"}},
-            {"$match": {'overview_size': '10000+ employees', 'reviews.reviews_val_date': 'last week'}},
-            {"$count": 'reviews'}        
-        ]
+    RDA3: (timeRange,empNumber) => {
+        return{
+            operation: "aggregate",
+            query: [
+                {"$unwind": {'path': "$reviews"}},
+                {"$match": {'overview_size': empNumber, 'reviews.reviews_val_date': timeRange}},
+                {"$count": 'reviews'}        
+            ]
+        }
     },
 
     RDA4: {
@@ -116,8 +119,34 @@ const QUERIES = {
 
 }
 
+RDA3_TIMERANGE_MAPPING = {
+    "20M":"20 minutes ago",
+    "1H":"1 hour ago",
+    "10H":"10 hours ago",
+    "1D":"yesterday",
+    "3D":"3 days ago",
+    "1W": "last week",
+    "2W":"2 weeks ago",
+    "4W":"4 weeks ago",
+    "7W": "7 weeks ago"
+}
+
+
+RDA3_EMPNUMBER_MAPPING = {
+    "L50":"1 to 50 employees",
+    "L200":"51 to 200 employees",
+    "L500":"201 to 500 employees",
+    "L1000":"501 to 1000 employees",
+    "L5000":"1001 to 5000 employees",
+    "L10000":"5001 to 10000 employees",
+    "M10000":"10000+ employees",
+    "U":"Unknown"
+}
+
 module.exports = {
     SSH_TUNEL_CONFIG,
     QUERIES,
-    QUERY_NAMES
+    QUERY_NAMES,
+    RDA3_TIMERANGE_MAPPING,
+    RDA3_EMPNUMBER_MAPPING
 }

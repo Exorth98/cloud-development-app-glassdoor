@@ -1,12 +1,13 @@
 const tunnel = require('tunnel-ssh');
 const MongoClient = require('mongodb').MongoClient
 
-const {aggregate, find} = require('./queryOperators')
+const {aggregate, find, stats} = require('./queryOperators')
 const {SSH_TUNEL_CONFIG} = require("./constants");
+const {filterStats} = require('./utils')
 
 const queryDB = (query, operation) => new Promise ( (resolve, reject) => {
 
-    const operator = operation == "find" ? find : aggregate
+    const operator = operation == "find" ? find : aggregate 
 
     console.log("Connecting tunnel...")
     tunnel(SSH_TUNEL_CONFIG, (error, server) => {
@@ -25,8 +26,15 @@ const queryDB = (query, operation) => new Promise ( (resolve, reject) => {
                 const collection = db.collection('glassdoor');
         
                 console.log("Running query...")
-                const response = await operator(collection, query)
-                console.log(`Query returned ${response.length} records.`)
+                let response = null
+                if(operation == "stats"){
+                    response = await stats(collection)
+                    response = filterStats(response)
+                }
+                else{
+                    response = await operator(collection, query)
+                    console.log(`Query returned ${response.length} records.`)
+                }
 
                 mongoClient.close();
                 console.log(response)
