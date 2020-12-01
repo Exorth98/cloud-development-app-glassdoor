@@ -12,4 +12,12 @@ const find = (collection, command) => new Promise( (resolve, reject) => {
     })
 })
 
-module.exports = {aggregate, find}
+const stats = (collection) => new Promise( (resolve, reject) => {
+    try{
+        const res = collection.stats()
+        resolve(res)
+    }
+    catch(e){reject(e)}
+})
+
+module.exports = {aggregate, find, stats}

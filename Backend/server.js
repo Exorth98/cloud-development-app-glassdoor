@@ -2,27 +2,43 @@ const express = require('express')
 const app = express()
 require('dotenv').config({path: '.env'})
 
-const {QUERIES, QUERY_NAMES} = require('./helpers/constants')
+const {
+    RDA3_TIMERANGE_MAPPING,
+    RDA3_EMPNUMBER_MAPPING,
+    QUERIES,
+    QUERY_NAMES
+} = require('./helpers/constants')
+
 const {queryDB} = require('./helpers/dbConnector')
 
 app.get('/', (req, res) => {
     res.send('Hello World')
 })
 
+app.get('/stats', async (req, res) => {
+    try{
+        result = await queryDB(null,"stats")
+        res.send(result)
+    }
+    catch(e){
+        res.send(e)
+        console.error(e)
+    }
+})
+
 app.get('/:query', async (req, res) => {
     const queryParam = req.params['query']
     if (QUERY_NAMES.includes(queryParam)){
-        const query = QUERIES[queryParam]
-
+        const queryInfo = QUERIES[queryParam](req.query)
+        // res.send(queryInfo)
         try{
-            result = await queryDB(query.query,query.operation)
+            result = await queryDB(queryInfo.query,queryInfo.operation)
             res.send(result)
         }
         catch(e){
             res.send(e)
             console.error(e)
         }
-        
     }
     else{
         res.send("Wrong query name")
@@ -30,13 +46,6 @@ app.get('/:query', async (req, res) => {
 })
    
 app.listen(5000)
-
-
-// TEST
-
-// RU1_res = query_aggregate(RU1)
-// RU3_res = query_find(RU3)
-// RU4_res = query_find(RU4)
 
 
 
