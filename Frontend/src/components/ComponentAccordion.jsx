@@ -4,6 +4,7 @@ import Accordion from '@material-ui/core/Accordion';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
@@ -44,14 +45,31 @@ const ComponentAccordion = ({data}) => {
     console.log(data);
     const classes = useStyles();
     const [expanded, setExpanded] = useState(false);
+    const [nbOfPrint, setNbOfPrint] = useState(10);
+    const [msgLoad, setMsgLoad] = useState("Load More");
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
       };
 
+      const handleChangeNb = () => () => {
+        if(nbOfPrint+10 < data.length){
+          setNbOfPrint(nbOfPrint + 10);
+        }else{
+          setNbOfPrint(data.length);
+          setMsgLoad("No More data");
+        }
+        
+        
+      };
+
+      const ButtonLoading = () => {
+         
+      }
+
     return(
         <div className={classes.root}>
-            {data.map((row) => (
+            {data.slice(0,nbOfPrint).map((row) => (
             <Accordion expanded={expanded === `${row.job_listingId_long}`} onChange={handleChange(`${row.job_listingId_long}`)} TransitionProps={{ unmountOnExit: true }} >
             
                 <AccordionSummary
@@ -82,7 +100,10 @@ const ComponentAccordion = ({data}) => {
                 </AccordionDetails>
        
            </Accordion>    
-             ))}        
+             ))}   
+            <Button variant="contained" color="primary" onClick={handleChangeNb()}>
+                {msgLoad}
+            </Button>   
         </div>
     );
 };

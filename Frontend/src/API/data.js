@@ -9,7 +9,7 @@ var data = [
     },
     {
       "name": "RU3",
-      "description": "Les annonces qui ont un “Benefits ratting” de 5",
+      "description": "Les annonces qui ont un “Benefits rating” de 5",
     },
     {
       "name": "RU4",
