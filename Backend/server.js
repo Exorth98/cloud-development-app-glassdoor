@@ -29,9 +29,10 @@ app.get('/stats', async (req, res) => {
 app.get('/:query', async (req, res) => {
     const queryParam = req.params['query']
     if (QUERY_NAMES.includes(queryParam)){
-        const query = QUERIES[queryParam]
+        const queryInfo = QUERIES[queryParam](req.query)
+        // res.send(queryInfo)
         try{
-            result = await queryDB(query.query,query.operation)
+            result = await queryDB(queryInfo.query,queryInfo.operation)
             res.send(result)
         }
         catch(e){
@@ -41,27 +42,6 @@ app.get('/:query', async (req, res) => {
     }
     else{
         res.send("Wrong query name")
-    }
-})
-
-app.get('/RDA3/:timeRange/:empNumber', async (req,res) => {
-    let timeRange = req.params['timeRange']
-    let empNumber = req.params['empNumber']
-    if(timeRange && empNumber){
-        timeRange = RDA3_TIMERANGE_MAPPING[timeRange]
-        empNumber = RDA3_EMPNUMBER_MAPPING[empNumber]
-        const query = QUERIES.RDA3(timeRange,empNumber)
-        try{
-            result = await queryDB(query.query,query.operation)
-            res.send(result)
-        }
-        catch(e){
-            res.send(e)
-            console.error(e)
-        }
-    }
-    else{
-        res.send("Wrong timeRange or empNumber")
     }
 })
    

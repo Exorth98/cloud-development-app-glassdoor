@@ -23,7 +23,7 @@ const QUERIES = {
 
     // User view
 
-    RU1: {
+    RU1: () => ({
         operation: "aggregate",
         query: [
             { 
@@ -38,44 +38,44 @@ const QUERIES = {
                 },
             },
         ]
-    },
+    }),
 
-    RU2: {
+    RU2: () => ({
         operation: "aggregate",
         query: [
             {"$unwind": { 'path': '$salary_salaries' } }, 
             {"$match": { 'salary_salaries.salary_salaries_val_jobTitle': 'Project Manager' } },
             {"$group": { '_id': 'salaries', 'moyenne salaires': { "$avg": "$salary_salaries.salary_salaries_val_salaryPercentileMap_payPercentile50" }}}
         ]
-    },
+    }),
 
 
-    RU3: {
+    RU3: () => ({
         operation: "find",
         query: {
             'benefits_benefitRatingDecimal': 5
         }
-    },
+    }),
 
-    RU4: {
+    RU4: () => ({
         operation: "find",
         query: {
             "header_location": "Paris",
             "overview_sector": "Information Technology"
         }
-    },
+    }),
 
     // Data Analyst view
 
-    RDA1: {
+    RDA1: () => ({
         operation: "aggregate",
         query: [
             {"$unwind": {'path': "$salary_salaries"}}, 
             {"$group": {'_id': {"$toInt": "$benefits_benefitRatingDecimal"},'average:': {"$avg": '$salary_salaries.salary_salaries_val_salaryPercentileMap_payPercentile50'}}}
         ]
-    },
+    }),
 
-    RDA2: {
+    RDA2: () => ({
         operation: "aggregate",
         query: [
             {"$unwind": { 'path': "$salary_salaries" } }, 
@@ -95,27 +95,25 @@ const QUERIES = {
                  }
             }    
         ]
-    },
+    }),
 
-    RDA3: (timeRange,empNumber) => {
-        return{
-            operation: "aggregate",
-            query: [
-                {"$unwind": {'path': "$reviews"}},
-                {"$match": {'overview_size': empNumber, 'reviews.reviews_val_date': timeRange}},
-                {"$count": 'reviews'}        
-            ]
-        }
-    },
+    RDA3: ({timeRange,empNumber}) => ({
+        operation: "aggregate",
+        query: [
+            {"$unwind": {'path': "$reviews"}},
+            {"$match": {'overview_size': empNumber, 'reviews.reviews_val_date': timeRange}},
+            {"$count": 'reviews'}        
+        ]
+    }),
 
-    RDA4: {
+    RDA4: () => ({
         operation: "aggregate",
         query: [
             {"$group": {"_id" : {"employer": "$header_employerName", "country": "$map_country"}, 
             "total":{"$sum" :1}}},
             {"$project" : {"employer" : "$_id.employer", "country" : "$_id.country", "total" : "$total", "_id" : 0}}
         ]    
-    }
+    })
 
 }
 
