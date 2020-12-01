@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs, Tab, AppBar} from "@material-ui/core";
 import ComponentPrinted from './ComponentPrinted';
 import ComponentCard from './ComponentCard';
+import ComponentAdminView from './ComponentAdminView';
 
 
 const MenuComponent = () => {
@@ -23,6 +24,7 @@ const MenuComponent = () => {
         <Tab label="RDA2" />
         <Tab label="RDA3" />
         <Tab label="RDA4" />
+        <Tab label="Admin View" />
         <Tab label="Team" />
       </Tabs>
       </AppBar>
@@ -34,7 +36,8 @@ const MenuComponent = () => {
       {selectedTab === 5 && <ComponentPrinted id='5'/>}
       {selectedTab === 6 && <ComponentPrinted id='6'/>}
       {selectedTab === 7 && <ComponentPrinted id='7'/>}
-      {selectedTab === 8 && <ComponentCard />}
+      {selectedTab === 8 && <ComponentAdminView />}
+      {selectedTab === 9 && <ComponentCard />}
       </>
     );
 };

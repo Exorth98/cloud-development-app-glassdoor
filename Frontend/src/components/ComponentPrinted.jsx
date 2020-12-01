@@ -11,7 +11,6 @@ const componentPrinted = ({id}) => {
                 <DataVisualisation name={data[id].name} id={id} />
         </div>
         //useEffect()
-        
     );
 };
 

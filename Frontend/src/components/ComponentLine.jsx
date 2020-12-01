@@ -17,7 +17,6 @@ const MyResponsiveLine = ({data}) => {
         
     }
     transformData(data);
-    console.log(viewData);
     return(
 
         <div className="line">
